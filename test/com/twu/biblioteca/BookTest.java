@@ -9,22 +9,19 @@ import static org.junit.Assert.*;
 
 public class BookTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
-    private final PrintStream originalErr = System.err;
 
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
     }
 
     @Test
     public void shouldCreateNewBook() {
         Book book = new Book("Harry Potter", "J. K. Rowling", 1997);
-        assertEquals(book.getTitle(), "Harry Potter");
-        assertEquals(book.getAuthor(), "J. K. Rowling");
-        assertEquals(book.getYear(), 1997);
+        assertEquals("Harry Potter", book.getTitle());
+        assertEquals("J. K. Rowling", book.getAuthor());
+        assertEquals(1997, book.getYear());
     }
 
     @Test
@@ -37,7 +34,6 @@ public class BookTest {
     @After
     public void restoreStreams() {
         System.setOut(originalOut);
-        System.setErr(originalErr);
     }
 
 }
