@@ -36,6 +36,14 @@ public class BookListTest {
         assertEquals("Harry Potter\tJ. K. Rowling\t1997\nHarry Potter 2\tJ. K. Rowling\t1999\n", outContent.toString());
     }
 
+    @Test
+    public void shouldFindBookByTitle() {
+        BookList bookList = new BookList();
+        String title = "Harry Potter";
+        Book book = bookList.findBookByTitle(title);
+        assertEquals(title, book.getTitle());
+    }
+
     @After
     public void restoreStreams() {
         System.setOut(originalOut);

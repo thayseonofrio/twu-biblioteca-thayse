@@ -18,6 +18,16 @@ public class BookList {
         return books;
     }
 
+    public Book findBookByTitle(String title) {
+        Book foundBook = null;
+        for (Book book : getBooks()) {
+            if (title.equals(book.getTitle())) {
+                foundBook = book;
+            }
+        }
+        return foundBook;
+    }
+
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();

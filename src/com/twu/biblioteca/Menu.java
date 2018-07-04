@@ -13,8 +13,11 @@ public class Menu {
     public Menu() {
         fillOptions();
         showMenuOptions();
-        int userInput = getUserInput();
-        chooseOption(userInput);
+        int userInput = 0;
+        do {
+            userInput = getUserInput();
+            chooseOption(userInput);
+        } while (userInput != 0);
     }
 
     public void fillOptions() {
@@ -34,24 +37,44 @@ public class Menu {
 
     public void chooseOption(int userInput) {
         switch(userInput) {
-            case 1:
-                BookList bookList = new BookList();
-                System.out.println(bookList);
+            case 0:
+                System.out.println("Bye bye");
                 break;
+            case 1:
+                newBookList();
+                break;
+            default:
+                System.out.println("Select a valid option!");
         }
     }
 
+    private void newBookList() {
+        BookList bookList = new BookList();
+        System.out.println(bookList);
+    }
+
+    // TODO: Como testar o menu??
     private int getUserInput() {
-        System.out.println("Insert a number to access a menu item");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        showInputText();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int result = 0;
         try {
-            String s = br.readLine();
-            if (s.length() > 0) {
-                result = Integer.parseInt(s);
-            }
+            result = readInput(reader, result);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+
+    private void showInputText() {
+        System.out.print("\n");
+        System.out.println("Insert a number to access a menu item");
+    }
+
+    private int readInput(BufferedReader reader, int result) throws IOException {
+        String s = reader.readLine();
+        if (s.length() > 0) {
+            result = Integer.parseInt(s);
         }
         return result;
     }
