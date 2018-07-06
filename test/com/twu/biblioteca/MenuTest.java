@@ -5,13 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.awt.print.Book;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 
 public class MenuTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -57,7 +55,7 @@ public class MenuTest {
     @Test
     public void shouldChooseOption() throws IOException {
         int userInput = 1;
-        BookList bookList = new BookList();
+        BookRepository bookList = new BookRepository();
         menu.chooseOption(1);
         assertEquals(bookList.toString(), outContent.toString());
     }

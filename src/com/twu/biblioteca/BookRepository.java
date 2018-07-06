@@ -1,11 +1,10 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
-
-public class BookList {
+public class BookRepository {
     private ArrayList<Book> books = new ArrayList<Book>();
 
-    public BookList() {
+    public BookRepository() {
         fillList();
     }
 
@@ -26,6 +25,10 @@ public class BookList {
             }
         }
         return foundBook;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
     }
 
     @Override

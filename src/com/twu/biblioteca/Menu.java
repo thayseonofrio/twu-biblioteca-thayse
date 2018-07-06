@@ -49,11 +49,10 @@ public class Menu {
     }
 
     private void newBookList() {
-        BookList bookList = new BookList();
+        BookRepository bookList = new BookRepository();
         System.out.println(bookList);
     }
 
-    // TODO: Como testar o menu??
     private int getUserInput() {
         showInputText();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

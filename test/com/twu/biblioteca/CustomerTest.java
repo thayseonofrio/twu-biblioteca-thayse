@@ -4,11 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 public class CustomerTest {
-    BookList bookList;
+    BookRepository bookList;
     Customer customer;
     @Before
     public void setUp() {
-        bookList = new BookList();
+        bookList = new BookRepository();
         customer = new Customer(bookList);
     }
 
@@ -31,5 +31,21 @@ public class CustomerTest {
         String bookToCheckout = "Harry Pfihd 2";
         String message = customer.checkoutBook(bookToCheckout);
         assertEquals("That book is not available.", message);
+    }
+
+    @Test
+    public void shouldKeepBookWithCustomer() {
+        Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookList.addBook(book);
+        customer.checkoutBook(book.getTitle());
+        assertEquals(customer.borrowedBook, book);
+    }
+
+    @Test
+    public void shouldAddBookToList() {
+        Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookList.addBook(book);
+        Book foundBook = bookList.findBookByTitle(book.getTitle());
+        assertEquals(foundBook, book);
     }
 }
