@@ -30,5 +30,10 @@ public class Customer {
         return message;
     }
 
+    public void returnBook() {
+        bookList.addBook(borrowedBook);
+        borrowedBook = null;
+    }
+
 
 }

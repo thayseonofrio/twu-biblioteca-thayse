@@ -48,4 +48,15 @@ public class CustomerTest {
         Book foundBook = bookList.findBookByTitle(book.getTitle());
         assertEquals(foundBook, book);
     }
+
+    @Test
+    public void shouldReturnBook() {
+        Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookList.addBook(book);
+        customer.checkoutBook(book.getTitle());
+        int listSizeWithoutBook = bookList.getBooks().size();
+        customer.returnBook();
+        assertNull(customer.borrowedBook);
+        assertEquals(listSizeWithoutBook + 1, bookList.getBooks().size());
+    }
 }
