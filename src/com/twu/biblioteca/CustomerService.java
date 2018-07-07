@@ -1,28 +1,24 @@
 package com.twu.biblioteca;
 
-public class Customer {
+public class CustomerService {
     BookRepository bookList;
     Book borrowedBook;
-    public Customer(BookRepository bookList) {
+    public CustomerService(BookRepository bookList) {
         this.bookList = bookList;
     }
 
     public String checkoutBook(String title) {
         Book book = bookList.findBookByTitle(title);
-        Boolean removed = bookList.getBooks().remove(book);
-        borrowBook(book, removed);
-        return getMessage(removed);
-    }
-
-    private void borrowBook(Book book, Boolean removed) {
-        if (removed) {
+        if (book != null) {
+            book.setBorrowed(true);
             borrowedBook = book;
         }
+        return getMessage(book);
     }
 
-    private String getMessage(Boolean removed) {
+    private String getMessage(Book book) {
         String message = "";
-        if (removed) {
+        if (book != null && book.isBorrowed()) {
             message = "Thank you! Enjoy the book";
         } else {
             message = "That book is not available.";
@@ -31,7 +27,8 @@ public class Customer {
     }
 
     public void returnBook() {
-        bookList.addBook(borrowedBook);
+        int indexOfBook = bookList.getBooks().indexOf(borrowedBook);
+        bookList.getBooks().get(indexOfBook).setBorrowed(false);
         borrowedBook = null;
     }
 

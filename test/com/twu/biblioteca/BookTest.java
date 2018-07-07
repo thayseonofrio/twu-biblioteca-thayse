@@ -31,6 +31,12 @@ public class BookTest {
         assertEquals("Harry Potter\tJ. K. Rowling\t1997", outContent.toString());
     }
 
+    @Test
+    public void shouldCreateBookNotBorrowedByDefault() {
+        Book book = new Book("Harry Potter", "J. K. Rowling", 1997);
+        assertFalse(book.isBorrowed());
+    }
+
     @After
     public void restoreStreams() {
         System.setOut(originalOut);

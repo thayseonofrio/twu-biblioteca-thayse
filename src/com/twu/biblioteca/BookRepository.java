@@ -31,6 +31,16 @@ public class BookRepository {
         books.add(book);
     }
 
+    public ArrayList<Book> getAvailableBooks() {
+        ArrayList<Book> availableBooks = new ArrayList<Book>();
+        for (Book book : books) {
+            if(!book.isBorrowed()) {
+                availableBooks.add(book);
+            }
+        }
+        return availableBooks;
+    }
+
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
