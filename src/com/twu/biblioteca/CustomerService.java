@@ -9,7 +9,7 @@ public class CustomerService {
 
     public String checkoutBook(String title) {
         Book book = bookList.findBookByTitle(title);
-        if (book != null) {
+        if (book != null && !book.isBorrowed()) {
             book.setBorrowed(true);
             borrowedBook = book;
         }
@@ -18,7 +18,7 @@ public class CustomerService {
 
     private String getMessage(Book book) {
         String message = "";
-        if (book != null && book.isBorrowed()) {
+        if (book != null && book.equals(borrowedBook)) {
             message = "Thank you! Enjoy the book";
         } else {
             message = "That book is not available.";
@@ -26,10 +26,29 @@ public class CustomerService {
         return message;
     }
 
-    public void returnBook() {
+    public String returnBook() {
+        String message = "";
         int indexOfBook = bookList.getBooks().indexOf(borrowedBook);
-        bookList.getBooks().get(indexOfBook).setBorrowed(false);
-        borrowedBook = null;
+        message = getReturnMessage(indexOfBook);
+        borrowBook(indexOfBook);
+        return message;
+    }
+
+    private void borrowBook(int indexOfBook) {
+        if (indexOfBook > -1) {
+            bookList.getBooks().get(indexOfBook).setBorrowed(false);
+            borrowedBook = null;
+        }
+    }
+
+    private String getReturnMessage(int indexOfBook) {
+        String message = "";
+        if (indexOfBook > -1) {
+            message = "Thank you for returning the book.";
+        } else {
+            message = "That is not a valid book to return.";
+        }
+        return message;
     }
 
 

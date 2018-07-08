@@ -60,4 +60,19 @@ public class CustomerServiceTest {
         assertNull(customerService.borrowedBook);
         assertEquals(availableBooksSizeWithoutBook + 1, bookList.getAvailableBooks().size());
     }
+
+    @Test
+    public void shouldShowSuccessfulReturnMessage() {
+        Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookList.addBook(book);
+        customerService.checkoutBook(book.getTitle());
+        String message = customerService.returnBook();
+        assertEquals("Thank you for returning the book.", message);
+    }
+
+    @Test
+    public void  shouldShowUnsuccessfulReturnMessage() {
+        String message = customerService.returnBook();
+        assertEquals("That is not a valid book to return.", message);
+    }
 }

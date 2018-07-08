@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Menu {
-
+    BookRepository bookList;
+    CustomerService customerService;
     private HashMap<Integer, String> menu = new HashMap<Integer, String>();
 
     public Menu() {
         fillOptions();
+        initialize();
         showMenuOptions();
         int userInput = 0;
         do {
@@ -21,7 +23,10 @@ public class Menu {
     }
 
     public void fillOptions() {
+        menu.put(0, "Quit");
         menu.put(1, "List Books");
+        menu.put(2, "Checkout Book");
+        menu.put(3, "Return Book");
     }
 
 
@@ -41,16 +46,50 @@ public class Menu {
                 System.out.println("Bye bye");
                 break;
             case 1:
-                newBookList();
+                printBookList();
+                break;
+            case 2:
+                checkoutBook();
+                break;
+            case 3:
+                returnBook();
                 break;
             default:
                 System.out.println("Select a valid option!");
         }
     }
 
-    private void newBookList() {
-        BookRepository bookList = new BookRepository();
+    private void initialize() {
+        bookList = new BookRepository();
+        customerService = new CustomerService(bookList);
+    }
+
+    private void printBookList() {
         System.out.println(bookList);
+    }
+
+    private void checkoutBook() {
+        String result = "";
+        System.out.println("Insert the name of the book to checkout: ");
+        result = customerService.checkoutBook(getBookTitle());
+        System.out.println(result);
+    }
+
+    private void returnBook() {
+        String result = "";
+        result = customerService.returnBook();
+        System.out.println(result);
+    }
+
+    private String getBookTitle() {
+        String bookTitle = "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            bookTitle = reader.readLine();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return bookTitle;
     }
 
     private int getUserInput() {

@@ -44,7 +44,7 @@ public class BookRepository {
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        for (Book book : books) {
+        for (Book book : getAvailableBooks()) {
             string.append(book.toString());
             string.append("\n");
         }

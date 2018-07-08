@@ -3,9 +3,6 @@ package com.twu.biblioteca;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,8 +15,6 @@ public class MenuTest {
 
     @Before
     public void newInstance() throws IOException {
-        BufferedReader bufferedReader = Mockito.mock(BufferedReader.class);
-        Mockito.when(bufferedReader.readLine()).thenReturn("1");
         menu = new Menu();
     }
 
@@ -41,16 +36,6 @@ public class MenuTest {
         menu.showMenuOptions();
         assertEquals("1 - List Books\n", outContent.toString());
     }
-
-// TODO: Como usar o mockito ????
-//    @Test
-//    public void shouldChooseOption() {
-//        String userInput = "1";
-//        BookList bookList = Mockito.mock(BookList.class);
-//        Mockito.when(bookList.getBooks()).thenCallRealMethod();
-//        menu.chooseOption(userInput);
-//        Mockito.verify(bookList).getBooks();
-//    }
 
     @Test
     public void shouldChooseOption() throws IOException {
