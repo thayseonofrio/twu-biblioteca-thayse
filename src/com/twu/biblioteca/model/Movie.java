@@ -25,4 +25,17 @@ public class Movie extends Item {
         }
         return rating.getValue();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append(getTitle());
+        string.append("\t");
+        string.append(getDirector());
+        string.append("\t");
+        string.append(getYear());
+        string.append("\t");
+        string.append(getRating());
+        return string.toString();
+    }
 }

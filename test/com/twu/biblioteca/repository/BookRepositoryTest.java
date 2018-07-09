@@ -41,4 +41,13 @@ public class BookRepositoryTest {
         assertEquals(title, foundBook.getTitle());
     }
 
+
+    @Test
+    public void shouldAddBookToList() {
+        Item item = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookRepository.addItem(item);
+        Item foundBook = bookRepository.findByTitle(item.getTitle());
+        assertEquals(foundBook, item);
+    }
+
 }

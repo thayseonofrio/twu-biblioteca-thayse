@@ -25,4 +25,10 @@ public class MovieRepository implements IItemRepository {
         movies.add(new Movie("Jurassic World", 2018, "J. A. Bayona", 8));
         movies.add(new Movie("Black Panther", 2018, "Ryan Coogler", 10));
     }
+
+
+    @Override
+    public String toString() {
+        return print();
+    }
 }

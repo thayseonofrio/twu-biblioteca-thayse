@@ -28,11 +28,6 @@ public class BookRepository implements IItemRepository {
 
     @Override
     public String toString() {
-        StringBuilder string = new StringBuilder();
-        for (Item item : getAvailableItems()) {
-            string.append(item.toString());
-            string.append("\n");
-        }
-        return string.toString();
+        return print();
     }
 }

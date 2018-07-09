@@ -30,4 +30,13 @@ public interface IItemRepository {
         }
         return availableItems;
     }
+
+    default String print() {
+        StringBuilder string = new StringBuilder();
+        for (Item item : getAvailableItems()) {
+            string.append(item.toString());
+            string.append("\n");
+        }
+        return string.toString();
+    }
 }

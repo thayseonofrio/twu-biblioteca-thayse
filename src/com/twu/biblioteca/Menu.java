@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.repository.BookRepository;
+import com.twu.biblioteca.repository.MovieRepository;
 import com.twu.biblioteca.service.CustomerService;
 
 import java.io.BufferedReader;
@@ -10,7 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Menu {
-    BookRepository bookList;
+    BookRepository bookRepository;
+    MovieRepository movieRepository;
     CustomerService customerService;
     private HashMap<Integer, String> menu = new HashMap<Integer, String>();
 
@@ -30,6 +32,9 @@ public class Menu {
         menu.put(1, "List Books");
         menu.put(2, "Checkout Book");
         menu.put(3, "Return Book");
+        menu.put(4, "List Movies");
+        menu.put(5, "Checkout Movie");
+        menu.put(6, "Return Movie");
     }
 
 
@@ -57,24 +62,36 @@ public class Menu {
             case 3:
                 returnBook();
                 break;
+            case 4:
+                printMovieList();
+                break;
+            case 5:
+                checkoutMovie();
+                break;
+            case 6:
+                returnMovie();
+                break;
             default:
                 System.out.println("Select a valid option!");
         }
     }
 
     private void initialize() {
-        bookList = new BookRepository();
-        customerService = new CustomerService(bookList);
+        bookRepository = new BookRepository();
+        movieRepository = new MovieRepository();
+        customerService = new CustomerService(bookRepository, movieRepository);
     }
 
     private void printBookList() {
-        System.out.println(bookList);
+        System.out.println(bookRepository);
     }
+
+    private void printMovieList() { System.out.println(movieRepository); }
 
     private void checkoutBook() {
         String result = "";
         System.out.println("Insert the name of the book to checkout: ");
-        result = customerService.checkoutBook(getBookTitle());
+        result = customerService.checkoutBook(getTitle());
         System.out.println(result);
     }
 
@@ -84,7 +101,20 @@ public class Menu {
         System.out.println(result);
     }
 
-    private String getBookTitle() {
+    private void checkoutMovie() {
+        String result = "";
+        System.out.println("Insert the name of the movie to checkout: ");
+        result = customerService.checkoutMovie(getTitle());
+        System.out.println(result);
+    }
+
+    private void returnMovie() {
+        String result = "";
+        result = customerService.returnMovie();
+        System.out.println(result);
+    }
+
+    private String getTitle() {
         String bookTitle = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
