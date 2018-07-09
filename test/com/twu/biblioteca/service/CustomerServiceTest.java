@@ -1,12 +1,15 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.service;
 
+import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.Item;
+import com.twu.biblioteca.repository.BookRepository;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 public class CustomerServiceTest {
-    BookRepository bookList;
-    CustomerService customerService;
+    private BookRepository bookList;
+    private CustomerService customerService;
     @Before
     public void setUp() {
         bookList = new BookRepository();
@@ -17,7 +20,7 @@ public class CustomerServiceTest {
     public void shouldCheckoutBook() {
         String bookToCheckout = "Harry Potter 2";
         customerService.checkoutBook(bookToCheckout);
-        assertEquals(bookList.getBooks().size() - 1, bookList.getAvailableBooks().size());
+        assertEquals(bookList.getItems().size() - 1, bookList.getAvailableItems().size());
     }
 
     @Test
@@ -37,34 +40,34 @@ public class CustomerServiceTest {
     @Test
     public void shouldKeepBookWithCustomer() {
         Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookList.addBook(book);
+        bookList.addItem(book);
         customerService.checkoutBook(book.getTitle());
-        assertEquals(customerService.borrowedBook, book);
+        assertEquals(customerService.getBorrowedBook(), book);
     }
 
     @Test
     public void shouldAddBookToList() {
-        Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookList.addBook(book);
-        Book foundBook = bookList.findBookByTitle(book.getTitle());
-        assertEquals(foundBook, book);
+        Item item = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookList.addItem(item);
+        Item foundBook = bookList.findByTitle(item.getTitle());
+        assertEquals(foundBook, item);
     }
 
     @Test
     public void shouldReturnBook() {
-        Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookList.addBook(book);
+        Item book = new Book("The Old Man and the Sea", "Hemingway", 1952);
+        bookList.addItem(book);
         customerService.checkoutBook(book.getTitle());
-        int availableBooksSizeWithoutBook = bookList.getAvailableBooks().size();
+        int availableBooksSizeWithoutBook = bookList.getAvailableItems().size();
         customerService.returnBook();
-        assertNull(customerService.borrowedBook);
-        assertEquals(availableBooksSizeWithoutBook + 1, bookList.getAvailableBooks().size());
+        assertNull(customerService.getBorrowedBook());
+        assertEquals(availableBooksSizeWithoutBook + 1, bookList.getAvailableItems().size());
     }
 
     @Test
     public void shouldShowSuccessfulReturnMessage() {
         Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookList.addBook(book);
+        bookList.addItem(book);
         customerService.checkoutBook(book.getTitle());
         String message = customerService.returnBook();
         assertEquals("Thank you for returning the book.", message);

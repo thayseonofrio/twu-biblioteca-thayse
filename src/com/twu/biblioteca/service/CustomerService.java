@@ -1,22 +1,30 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.service;
+
+import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.Item;
+import com.twu.biblioteca.repository.BookRepository;
 
 public class CustomerService {
-    BookRepository bookList;
-    Book borrowedBook;
+    private BookRepository bookList;
+    private Item borrowedBook;
     public CustomerService(BookRepository bookList) {
         this.bookList = bookList;
     }
 
-    public String checkoutBook(String title) {
-        Book book = bookList.findBookByTitle(title);
-        if (book != null && !book.isBorrowed()) {
-            book.setBorrowed(true);
-            borrowedBook = book;
-        }
-        return getMessage(book);
+    public Item getBorrowedBook() {
+        return borrowedBook;
     }
 
-    private String getMessage(Book book) {
+    public String checkoutBook(String title) {
+        Item item = bookList.findByTitle(title);
+        if (item != null && !item.isBorrowed()) {
+            item.setBorrowed(true);
+            borrowedBook = item;
+        }
+        return getMessage(item);
+    }
+
+    private String getMessage(Item book) {
         String message = "";
         if (book != null && book.equals(borrowedBook)) {
             message = "Thank you! Enjoy the book";
@@ -28,7 +36,7 @@ public class CustomerService {
 
     public String returnBook() {
         String message = "";
-        int indexOfBook = bookList.getBooks().indexOf(borrowedBook);
+        int indexOfBook = bookList.getItems().indexOf(borrowedBook);
         message = getReturnMessage(indexOfBook);
         borrowBook(indexOfBook);
         return message;
@@ -36,7 +44,7 @@ public class CustomerService {
 
     private void borrowBook(int indexOfBook) {
         if (indexOfBook > -1) {
-            bookList.getBooks().get(indexOfBook).setBorrowed(false);
+            bookList.getItems().get(indexOfBook).setBorrowed(false);
             borrowedBook = null;
         }
     }
