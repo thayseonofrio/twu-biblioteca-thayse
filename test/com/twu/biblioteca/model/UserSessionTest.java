@@ -8,7 +8,7 @@ public class UserSessionTest {
     public void shouldSetUserSession() {
         User user = null;
         try {
-            user = new User(new LoginInformation("111-1111", "222"));
+            user = new User(new LoginInformation("111-1111", "222"), "name", "email", "number");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class UserSessionTest {
     public void shouldCheckIfUserIsLoggedIn() {
         User user = null;
         try {
-            user = new User(new LoginInformation("111-1111", "222"));
+            user = new User(new LoginInformation("111-1111", "222"), "name", "email", "number");
         } catch (Exception e) {
             e.printStackTrace();
         }

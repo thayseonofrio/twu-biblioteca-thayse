@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.model.User;
 import com.twu.biblioteca.model.UserSession;
 import com.twu.biblioteca.repository.BookRepository;
 import com.twu.biblioteca.repository.MovieRepository;
@@ -38,6 +37,7 @@ public class Menu {
         menu.put(4, "List Movies");
         menu.put(5, "Checkout Movie");
         menu.put(6, "Return Movie");
+        menu.put(7, "User Info");
     }
 
 
@@ -55,7 +55,6 @@ public class Menu {
         switch(userInput) {
             case 0:
                 endSession();
-                System.out.println("Bye bye");
                 break;
             case 1:
                 printBookList();
@@ -75,8 +74,11 @@ public class Menu {
             case 6:
                 returnMovie();
                 break;
+            case 7:
+                showUserInfo();
+                break;
             default:
-                System.out.println("Select a valid option!");
+                System.out.println("\n ****** Select a valid option! ****** \n");
         }
     }
 
@@ -95,7 +97,7 @@ public class Menu {
     private void checkoutBook() {
         if (UserSession.isLoggedIn()) {
             String result = "";
-            System.out.println("Insert the name of the book to checkout: ");
+            System.out.println("\nInsert the name of the book to checkout: ");
             result = customerService.checkoutBook(getTitle());
             System.out.println(result);
         } else {
@@ -116,7 +118,7 @@ public class Menu {
     private void checkoutMovie() {
         if (UserSession.isLoggedIn()) {
             String result = "";
-            System.out.println("Insert the name of the movie to checkout: ");
+            System.out.println("\nInsert the name of the movie to checkout: ");
             result = customerService.checkoutMovie(getTitle());
             System.out.println(result);
         } else {
@@ -159,7 +161,7 @@ public class Menu {
 
     private void showInputText() {
         System.out.print("\n");
-        System.out.println("Insert a number to access a menu item");
+        System.out.println("\nInsert a number to access a menu item:");
     }
 
     private int readInput(BufferedReader reader, int result) throws IOException {
@@ -171,7 +173,7 @@ public class Menu {
     }
 
     private void requestLogin() {
-        System.out.println("You must be logged in to perform this action.");
+        System.out.println("\n ****** You must be logged in to perform this action. ****** \n");
         login();
     }
 
@@ -179,8 +181,8 @@ public class Menu {
         String password = "";
         String login= "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        login = getLoginInput(login, reader, "Insert Library Number");
-        password = getLoginInput(password, reader, "Insert Password");
+        login = getLoginInput(login, reader, "\nInsert Library Number:");
+        password = getLoginInput(password, reader, "\nInsert Password:");
         authenticate(password, login);
     }
 
@@ -188,7 +190,19 @@ public class Menu {
         AuthenticationService authenticationService = new AuthenticationService(login, password);
         boolean validation = authenticationService.verifyCredentials();
         if (!validation) {
-            System.out.println("Invalid Login");
+            System.out.println("\nInvalid Login\n");
+        } else {
+            System.out.println(UserSession.getUser());
+        }
+    }
+
+    private void showUserInfo() {
+        if (UserSession.isLoggedIn()) {
+            System.out.println("************************");
+            System.out.println(UserSession.getUser());
+            System.out.println("************************");
+        } else {
+            requestLogin();
         }
     }
 
@@ -204,5 +218,6 @@ public class Menu {
 
     private void endSession() {
         UserSession.setUser(null);
+        System.out.println("\n *** Bye bye *** \n");
     }
 }
