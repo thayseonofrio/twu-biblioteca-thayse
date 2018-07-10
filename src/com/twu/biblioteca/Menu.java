@@ -1,7 +1,10 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.model.User;
+import com.twu.biblioteca.model.UserSession;
 import com.twu.biblioteca.repository.BookRepository;
 import com.twu.biblioteca.repository.MovieRepository;
+import com.twu.biblioteca.service.AuthenticationService;
 import com.twu.biblioteca.service.CustomerService;
 
 import java.io.BufferedReader;
@@ -51,6 +54,7 @@ public class Menu {
     public void chooseOption(int userInput) {
         switch(userInput) {
             case 0:
+                endSession();
                 System.out.println("Bye bye");
                 break;
             case 1:
@@ -89,29 +93,45 @@ public class Menu {
     private void printMovieList() { System.out.println(movieRepository); }
 
     private void checkoutBook() {
-        String result = "";
-        System.out.println("Insert the name of the book to checkout: ");
-        result = customerService.checkoutBook(getTitle());
-        System.out.println(result);
+        if (UserSession.isLoggedIn()) {
+            String result = "";
+            System.out.println("Insert the name of the book to checkout: ");
+            result = customerService.checkoutBook(getTitle());
+            System.out.println(result);
+        } else {
+            requestLogin();
+        }
     }
 
     private void returnBook() {
-        String result = "";
-        result = customerService.returnBook();
-        System.out.println(result);
+        if (UserSession.isLoggedIn()) {
+            String result = "";
+            result = customerService.returnBook();
+            System.out.println(result);
+        } else {
+            requestLogin();
+        }
     }
 
     private void checkoutMovie() {
-        String result = "";
-        System.out.println("Insert the name of the movie to checkout: ");
-        result = customerService.checkoutMovie(getTitle());
-        System.out.println(result);
+        if (UserSession.isLoggedIn()) {
+            String result = "";
+            System.out.println("Insert the name of the movie to checkout: ");
+            result = customerService.checkoutMovie(getTitle());
+            System.out.println(result);
+        } else {
+            requestLogin();
+        }
     }
 
     private void returnMovie() {
-        String result = "";
-        result = customerService.returnMovie();
-        System.out.println(result);
+        if(UserSession.isLoggedIn()) {
+            String result = "";
+            result = customerService.returnMovie();
+            System.out.println(result);
+        } else {
+            requestLogin();
+        }
     }
 
     private String getTitle() {
@@ -148,5 +168,41 @@ public class Menu {
             result = Integer.parseInt(s);
         }
         return result;
+    }
+
+    private void requestLogin() {
+        System.out.println("You must be logged in to perform this action.");
+        login();
+    }
+
+    private void login() {
+        String password = "";
+        String login= "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        login = getLoginInput(login, reader, "Insert Library Number");
+        password = getLoginInput(password, reader, "Insert Password");
+        authenticate(password, login);
+    }
+
+    private void authenticate(String password, String login) {
+        AuthenticationService authenticationService = new AuthenticationService(login, password);
+        boolean validation = authenticationService.verifyCredentials();
+        if (!validation) {
+            System.out.println("Invalid Login");
+        }
+    }
+
+    private String getLoginInput(String login, BufferedReader reader, String s) {
+        System.out.println(s);
+        try {
+            login = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return login;
+    }
+
+    private void endSession() {
+        UserSession.setUser(null);
     }
 }
