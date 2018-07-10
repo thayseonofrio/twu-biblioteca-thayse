@@ -6,7 +6,12 @@ public class UserSessionTest {
 
     @Test
     public void shouldSetUserSession() {
-        User user = new User(new LoginInformation("111", "222"));
+        User user = null;
+        try {
+            user = new User(new LoginInformation("111-1111", "222"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         UserSession.setUser(user);
         assertNotNull(UserSession.user);
     }
@@ -20,7 +25,12 @@ public class UserSessionTest {
 
     @Test
     public void shouldCheckIfUserIsLoggedIn() {
-        User user = new User(new LoginInformation("111", "222"));
+        User user = null;
+        try {
+            user = new User(new LoginInformation("111-1111", "222"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         UserSession.setUser(user);
         assertTrue(UserSession.isLoggedIn());
     }
