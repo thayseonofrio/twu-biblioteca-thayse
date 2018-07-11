@@ -18,7 +18,11 @@ public class AuthenticationService {
 
     public boolean verifyCredentials() {
         boolean validation = false;
-        Optional<User> foundUser = userRepository.getUsers().stream().filter(user -> user.getLoginInformation().getLibraryNumber().equals(inputLogin)).findFirst();
+        Optional<User> foundUser = userRepository.getUsers()
+                .stream()
+                .filter(user -> user.getLoginInformation()
+                        .getLibraryNumber().equals(inputLogin))
+                .findFirst();
         if (!foundUser.isPresent()) {
             return validation;
         }

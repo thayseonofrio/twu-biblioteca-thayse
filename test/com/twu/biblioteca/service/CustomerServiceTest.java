@@ -3,38 +3,31 @@ package com.twu.biblioteca.service;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Item;
 import com.twu.biblioteca.model.Movie;
-import com.twu.biblioteca.repository.BookRepository;
-import com.twu.biblioteca.repository.MovieRepository;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-// TODO: Mock repositories
 public class CustomerServiceTest {
-    private BookRepository bookRepository;
-    private MovieRepository movieRepository;
     private CustomerService customerService;
     @Before
     public void setUp() {
-        bookRepository = new BookRepository();
-        movieRepository = new MovieRepository();
-        customerService = new CustomerService(bookRepository, movieRepository);
+        customerService = new CustomerService();
     }
 
     @Test
     public void shouldCheckoutBook() {
         String bookToCheckout = "Harry Potter 2";
         customerService.checkoutBook(bookToCheckout);
-        assertEquals(bookRepository.getItems().size() - 1, bookRepository.getAvailableItems().size());
+        assertEquals(customerService.getBooks().size() - 1, customerService.getAvailableBooks().size());
     }
 
     @Test
     public void shouldCheckoutMovie() {
         Movie movie = new Movie("Incredibles 2", 2018, "Brad Bird");
-        movieRepository.addItem(movie);
+        customerService.addMovie(movie);
         String movieToCheckout = "Incredibles 2";
         customerService.checkoutMovie(movieToCheckout);
-        assertEquals(movieRepository.getItems().size() - 1, movieRepository.getAvailableItems().size());
+        assertEquals(customerService.getMovies().size() - 1, customerService.getAvailableMovies().size());
     }
 
     @Test
@@ -68,7 +61,7 @@ public class CustomerServiceTest {
     @Test
     public void shouldKeepBookWithCustomer() {
         Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookRepository.addItem(book);
+        customerService.addBook(book);
         customerService.checkoutBook(book.getTitle());
         assertEquals(customerService.getBorrowedBook(), book);
     }
@@ -76,7 +69,7 @@ public class CustomerServiceTest {
     @Test
     public void shouldKeepMovieWithCustomer() {
         Movie movie = new Movie("Incredibles 2", 2018, "Brad Bird");
-        movieRepository.addItem(movie);
+        customerService.addMovie(movie);
         customerService.checkoutMovie(movie.getTitle());
         assertEquals(customerService.getBorrowedMovie(), movie);
     }
@@ -85,29 +78,29 @@ public class CustomerServiceTest {
     @Test
     public void shouldReturnBook() {
         Item book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookRepository.addItem(book);
+        customerService.addBook(book);
         customerService.checkoutBook(book.getTitle());
-        int availableBooksSizeWithoutBook = bookRepository.getAvailableItems().size();
+        int availableBooksSizeWithoutBook = customerService.getAvailableBooks().size();
         customerService.returnBook();
         assertNull(customerService.getBorrowedBook());
-        assertEquals(availableBooksSizeWithoutBook + 1, bookRepository.getAvailableItems().size());
+        assertEquals(availableBooksSizeWithoutBook + 1, customerService.getAvailableBooks().size());
     }
 
     @Test
     public void shouldReturnMovie() {
         Item movie = new Movie("Incredibles 2", 2018, "Brad Bird");
-        movieRepository.addItem(movie);
+        customerService.addMovie(movie);
         customerService.checkoutMovie(movie.getTitle());
-        int availableMoviesSizeWithoutMovie = movieRepository.getAvailableItems().size();
+        int availableMoviesSizeWithoutMovie = customerService.getAvailableMovies().size();
         customerService.returnMovie();
         assertNull(customerService.getBorrowedMovie());
-        assertEquals(availableMoviesSizeWithoutMovie + 1, movieRepository.getAvailableItems().size());
+        assertEquals(availableMoviesSizeWithoutMovie + 1, customerService.getAvailableMovies().size());
     }
 
     @Test
     public void shouldShowSuccessfulBookReturnMessage() {
         Book book = new Book("The Old Man and the Sea", "Hemingway", 1952);
-        bookRepository.addItem(book);
+        customerService.addBook(book);
         customerService.checkoutBook(book.getTitle());
         String message = customerService.returnBook();
         assertEquals("Thank you for returning the book.", message);
@@ -122,7 +115,7 @@ public class CustomerServiceTest {
     @Test
     public void shouldShowSuccessfulMovieReturnMessage() {
         Item movie = new Movie("Incredibles 2", 2018, "Brad Bird");
-        movieRepository.addItem(movie);
+        customerService.addMovie(movie);
         customerService.checkoutMovie(movie.getTitle());
         String message = customerService.returnMovie();
         assertEquals("Thank you for returning the movie.", message);

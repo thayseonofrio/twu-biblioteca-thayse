@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+// TODO: change to inner interface
 public final class Constants {
     public static final String MESSAGE_BOOK_CHECKOUT_SUCCESS = "Thank you! Enjoy the book";
     public static final String MESSAGE_MOVIE_CHECKOUT_SUCCESS = "Thank you! Enjoy the movie";

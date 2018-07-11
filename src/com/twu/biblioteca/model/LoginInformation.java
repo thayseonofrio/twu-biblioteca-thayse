@@ -5,6 +5,7 @@ import java.util.IllegalFormatConversionException;
 import java.util.IllegalFormatException;
 import java.util.regex.Pattern;
 
+// TODO: validation should be in service, not here.
 public class LoginInformation {
     final static Pattern idFormat = Pattern.compile("\\d{3}-\\d{4}");
     private String libraryNumber;

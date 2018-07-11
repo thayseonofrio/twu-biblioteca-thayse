@@ -12,9 +12,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: view should only have access to service and not to repos
 public class Menu {
-    BookRepository bookRepository;
-    MovieRepository movieRepository;
     CustomerService customerService;
     private HashMap<Integer, String> menu = new HashMap<Integer, String>();
 
@@ -81,18 +80,15 @@ public class Menu {
                 System.out.println("\n ****** Select a valid option! ****** \n");
         }
     }
-
     private void initialize() {
-        bookRepository = new BookRepository();
-        movieRepository = new MovieRepository();
-        customerService = new CustomerService(bookRepository, movieRepository);
+        customerService = new CustomerService();
     }
 
     private void printBookList() {
-        System.out.println(bookRepository);
+        customerService.printBook();
     }
 
-    private void printMovieList() { System.out.println(movieRepository); }
+    private void printMovieList() { customerService.printMovie(); }
 
     private void checkoutBook() {
         if (UserSession.isLoggedIn()) {
