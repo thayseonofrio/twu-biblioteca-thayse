@@ -1,6 +1,5 @@
 package com.twu.biblioteca.model;
 
-// TODO: move validation to service
 public class Rating {
     private int value;
 

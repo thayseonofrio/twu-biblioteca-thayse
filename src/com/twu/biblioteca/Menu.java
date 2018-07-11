@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: view should only have access to service and not to repos
 public class Menu {
     CustomerService customerService;
     private HashMap<Integer, String> menu = new HashMap<Integer, String>();

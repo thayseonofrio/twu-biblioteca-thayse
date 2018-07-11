@@ -2,7 +2,6 @@ package com.twu.biblioteca.service;
 import org.junit.Test;
 import static org.junit.Assert.*;
 public class AuthenticationServiceTest {
-    // TODO: Mock data
     @Test
     public void shouldCreateAuthenticationServiceWithInputData() {
         AuthenticationService authenticationService =  new AuthenticationService("123-4567", "pass123");

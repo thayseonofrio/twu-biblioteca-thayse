@@ -6,7 +6,6 @@ import com.twu.biblioteca.repository.BookRepository;
 
 import java.util.List;
 
-import static com.twu.biblioteca.Constants.*;
 
 public class BookService extends ItemFactory {
     private BookRepository bookRepository = new BookRepository();
@@ -34,9 +33,9 @@ public class BookService extends ItemFactory {
     private String getCheckoutMessage(Book book) {
         String message = "";
         if (book != null && book.equals(borrowedBook)) {
-            message = MESSAGE_BOOK_CHECKOUT_SUCCESS;
+            message = Constants.MESSAGE_BOOK_CHECKOUT_SUCCESS;
         } else {
-            message = MESSAGE_BOOK_CHECKOUT_FAILURE;
+            message = Constants.MESSAGE_BOOK_CHECKOUT_FAILURE;
         }
         return message;
     }
@@ -63,9 +62,9 @@ public class BookService extends ItemFactory {
     private String getReturnMessage(int indexOfBook) {
         String message = "";
         if (indexOfBook > -1) {
-            message = MESSAGE_BOOK_RETURN_SUCCESS;
+            message = Constants.MESSAGE_BOOK_RETURN_SUCCESS;
         } else {
-            message = MESSAGE_BOOK_RETURN_FAILURE;
+            message = Constants.MESSAGE_BOOK_RETURN_FAILURE;
         }
         return message;
     }
@@ -85,5 +84,13 @@ public class BookService extends ItemFactory {
     public void addItem(Item item) {
         bookRepository.addItem(item);
     }
+
+    private interface Constants {
+        String MESSAGE_BOOK_CHECKOUT_SUCCESS = "Thank you! Enjoy the book";
+        String MESSAGE_BOOK_CHECKOUT_FAILURE = "That book is not available.";
+        String MESSAGE_BOOK_RETURN_SUCCESS = "Thank you for returning the book.";
+        String MESSAGE_BOOK_RETURN_FAILURE = "That is not a valid book to return.";
+    }
+
 
 }

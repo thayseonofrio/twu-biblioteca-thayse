@@ -1,18 +1,13 @@
 package com.twu.biblioteca.model;
-
-import java.text.ParseException;
-import java.util.IllegalFormatConversionException;
-import java.util.IllegalFormatException;
 import java.util.regex.Pattern;
 
-// TODO: validation should be in service, not here.
 public class LoginInformation {
     final static Pattern idFormat = Pattern.compile("\\d{3}-\\d{4}");
     private String libraryNumber;
     private String password;
 
-    public LoginInformation(String libraryNumber, String password) throws Exception {
-        setLibraryNumber(libraryNumber);
+    public LoginInformation(String libraryNumber, String password) {
+        this.libraryNumber = libraryNumber;
         this.password = password;
     }
 
@@ -24,13 +19,15 @@ public class LoginInformation {
         return password;
     }
 
-    private void setLibraryNumber(String libraryNumber) throws Exception {
+    public boolean isValidLibraryNumber(String libraryNumber) {
+        boolean result = false;
         if (validateLibraryNumber(libraryNumber)) {
-            this.libraryNumber = libraryNumber;
+            result = true;
         }
         else {
-            throw new Exception("Library number should be in format xxx-xxxx");
+            result = false;
         }
+        return result;
     }
 
     private boolean validateLibraryNumber(String libraryNumber) {

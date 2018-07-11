@@ -6,7 +6,6 @@ import com.twu.biblioteca.repository.MovieRepository;
 
 import java.util.List;
 
-import static com.twu.biblioteca.Constants.*;
 
 public class MovieService extends ItemFactory {
     private Item borrowedMovie;
@@ -32,9 +31,9 @@ public class MovieService extends ItemFactory {
     private String getCheckoutMessage(Movie movie) {
         String message = "";
         if (movie != null && movie.equals(borrowedMovie)) {
-            message = MESSAGE_MOVIE_CHECKOUT_SUCCESS;
+            message = Constants.MESSAGE_MOVIE_CHECKOUT_SUCCESS;
         } else {
-            message = MESSAGE_MOVIE_CHECKOUT_FAILURE;
+            message = Constants.MESSAGE_MOVIE_CHECKOUT_FAILURE;
         }
         return message;
     }
@@ -57,9 +56,9 @@ public class MovieService extends ItemFactory {
     private String getReturnMessage(int indexOfBook) {
         String message = "";
         if (indexOfBook > -1) {
-            message = MESSAGE_MOVIE_RETURN_SUCCESS;
+            message = Constants.MESSAGE_MOVIE_RETURN_SUCCESS;
         } else {
-            message = MESSAGE_MOVIE_RETURN_FAILURE;
+            message = Constants.MESSAGE_MOVIE_RETURN_FAILURE;
         }
         return message;
     }
@@ -79,5 +78,14 @@ public class MovieService extends ItemFactory {
     public void addItem(Item item) {
         movieRepository.addItem(item);
     }
+
+
+    private interface Constants {
+        String MESSAGE_MOVIE_CHECKOUT_SUCCESS = "Thank you! Enjoy the movie";
+        String MESSAGE_MOVIE_CHECKOUT_FAILURE = "That movie is not available.";
+        String MESSAGE_MOVIE_RETURN_SUCCESS = "Thank you for returning the movie.";
+        String MESSAGE_MOVIE_RETURN_FAILURE = "That is not a valid movie to return.";
+    }
+
 
 }

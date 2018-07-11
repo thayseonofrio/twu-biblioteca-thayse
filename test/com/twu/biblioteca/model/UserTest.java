@@ -5,14 +5,14 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     @Test
-    public void shouldCreateUserWithLoginInformation() throws Exception {
+    public void shouldCreateUserWithLoginInformation() {
         LoginInformation info = new LoginInformation("123-4567", "password");
         User user = new User(info,"name", "email", "number");
         assertEquals(info, user.getLoginInformation());
     }
 
     @Test
-    public void shouldGetUserInformation() throws Exception {
+    public void shouldGetUserInformation() {
         LoginInformation info = new LoginInformation("123-4567", "password");
         User user = new User(info,"name", "email", "number");
         assertEquals("name", user.getName());

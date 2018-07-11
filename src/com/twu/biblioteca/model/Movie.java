@@ -20,7 +20,6 @@ public class Movie extends Item {
     }
 
     public int getRating() {
-        // TODO: find better way to do this
         if (rating == null) {
             return 0;
         }
